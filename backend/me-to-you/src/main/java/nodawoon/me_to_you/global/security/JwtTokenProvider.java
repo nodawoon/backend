@@ -49,7 +49,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveAccessToken(HttpServletRequest request) {
-        return resolveCookie(request, "BIBLIOPHILE_TOKEN");
+        return resolveCookie(request, "ME_TO_YOU_TOKEN");
     }
 
     public String resolveRefreshToken(HttpServletRequest request) {
