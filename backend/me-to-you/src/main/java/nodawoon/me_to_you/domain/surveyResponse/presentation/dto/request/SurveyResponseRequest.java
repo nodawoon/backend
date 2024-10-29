@@ -1,10 +1,8 @@
-package nodawoon.me_to_you.domain.surveyResponse.presentation.dto;
-
-import lombok.Data;
+package nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request;
 
 import java.time.LocalDateTime;
 
-public record SurveyResponseDto(
+public record SurveyResponseRequest(
         Long surveyResponseId,
         Long userId,
         Long surveyQuestionId,
