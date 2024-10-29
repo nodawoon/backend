@@ -1,6 +1,7 @@
 package nodawoon.me_to_you.global.config;
 
 import lombok.RequiredArgsConstructor;
+import nodawoon.me_to_you.domain.oauth.presentation.OauthServerTypeConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.HttpMethod;
@@ -26,8 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .exposedHeaders("*");
     }
 
-//    @Override
-//    public void addFormatters(FormatterRegistry registry) {
-//        registry.addConverter(new OauthServerTypeConverter());
-//    }
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new OauthServerTypeConverter());
+    }
 }
