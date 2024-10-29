@@ -46,20 +46,20 @@ oauth:
       - name
       - email
 
-#auth:
-#  jwt:
-#    secretKey: ${JWT_SECRET_KEY}
-#    accessExp: ${JWT_ACCESS_EXP}
-#    refreshExp: ${JWT_REFRESH_EXP}
-#    header: ${JWT_HEADER}
-#    prefix: ${JWT_PREFIX}
+auth:
+  jwt:
+    secretKey: ${JWT_SECRET_KEY}
+    accessExp: ${JWT_ACCESS_EXP}
+    refreshExp: ${JWT_REFRESH_EXP}
+    header: ${JWT_HEADER}
+    prefix: ${JWT_PREFIX}
 
-aws:
-  access-key: ${AWS_ACCESS_KEY}
-  secret-key: ${AWS_SECRET_KEY}
-  s3:
-    bucket: ${AWS_S3_BUCKET}
-    base-url: ${AWS_S3_BASE_URL}
+#aws:
+#  access-key: ${AWS_ACCESS_KEY}
+#  secret-key: ${AWS_SECRET_KEY}
+#  s3:
+#    bucket: ${AWS_S3_BUCKET}
+#    base-url: ${AWS_S3_BASE_URL}
 
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
