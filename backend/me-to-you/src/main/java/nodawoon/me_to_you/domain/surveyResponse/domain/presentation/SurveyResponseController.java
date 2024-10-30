@@ -1,11 +1,11 @@
-package nodawoon.me_to_you.domain.surveyResponse.presentation;
+package nodawoon.me_to_you.domain.surveyResponse.domain.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
+import nodawoon.me_to_you.domain.surveyResponse.domain.presentation.dto.request.SurveyResponseRequest;
 import nodawoon.me_to_you.domain.surveyResponse.service.SurveyResponseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
