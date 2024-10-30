@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
 import nodawoon.me_to_you.domain.surveyResponse.domain.repository.SurveyResponseRepository;
-import nodawoon.me_to_you.domain.surveyResponse.domain.presentation.dto.request.SurveyResponseRequest;
+import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,4 @@ public class SurveyResponseService {
 
         surveyResponseRepository.save(surveyResponse);
     }
-
-
 }
