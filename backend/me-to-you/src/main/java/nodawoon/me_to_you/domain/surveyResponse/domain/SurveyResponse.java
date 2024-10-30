@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import nodawoon.me_to_you.domain.respondent.domain.Respondent;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.database.BaseEntity;
 
@@ -24,32 +25,28 @@ public class SurveyResponse extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // surveyQuestionId 를 Enum 으로 뺄 지, 일단은 안빼놓을게요.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "respondent_id")
+    private Respondent respondent;
+
     private Long surveyQuestionId;
 
     private String response;
 
-    private String respondentNickname;
-
-    @Column(name = "respondent_id", length = 36)
-    private String respondentId;
-
     @Builder
-    public SurveyResponse(User user, Long surveyQuestionId, String response, String respondentNickname, String respondentId) {
+    public SurveyResponse(User user, Respondent respondent, Long surveyQuestionId, String response) {
         this.user = user;
+        this.respondent = respondent;
         this.surveyQuestionId = surveyQuestionId;
         this.response = response;
-        this.respondentNickname = respondentNickname;
-        this.respondentId = respondentId;
     }
 
-    public static SurveyResponse createSurveyResponse(User user, Long surveyQuestionId, String response, String respondentNickname, String respondentId) {
+    public static SurveyResponse createSurveyResponse(User user, Respondent respondent, Long surveyQuestionId, String response) {
         return builder()
                 .user(user)
+                .respondent(respondent)
                 .surveyQuestionId(surveyQuestionId)
                 .response(response)
-                .respondentNickname(respondentNickname)
-                .respondentId(respondentId)
                 .build();
     }
 }
