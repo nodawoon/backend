@@ -1,4 +1,4 @@
-package nodawoon.me_to_you.domain.respondent.domain;
+package nodawoon.me_to_you.domain.result.domain;
 
 import jakarta.persistence.*;
 import lombok.Builder;

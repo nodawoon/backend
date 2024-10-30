@@ -2,8 +2,8 @@ package nodawoon.me_to_you.domain.surveyResponse.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nodawoon.me_to_you.domain.respondent.domain.Respondent;
-import nodawoon.me_to_you.domain.respondent.domain.repository.RespondentRepository;
+import nodawoon.me_to_you.domain.result.domain.Respondent;
+import nodawoon.me_to_you.domain.result.domain.repository.RespondentRepository;
 import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
 import nodawoon.me_to_you.domain.surveyResponse.domain.repository.SurveyResponseRepository;
 import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseWrapperRequest;
@@ -51,7 +51,5 @@ public class SurveyResponseService {
 
             surveyResponseRepository.save(surveyResponse);
         }
-
-
     }
 }

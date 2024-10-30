@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import nodawoon.me_to_you.domain.respondent.domain.Respondent;
+import nodawoon.me_to_you.domain.result.domain.Respondent;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.database.BaseEntity;
 
