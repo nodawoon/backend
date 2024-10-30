@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
+import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseWrapperRequest;
 import nodawoon.me_to_you.domain.surveyResponse.service.SurveyResponseService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class SurveyResponseController {
     @Operation(summary = "기본 질문 답변 저장")
     @PostMapping
     public void createSurveyResponse(
-            @RequestBody @Valid SurveyResponseRequest surveyResponseRequest) {
-        surveyResponseService.createSurveyResponse(surveyResponseRequest); // 200
+            @RequestBody @Valid SurveyResponseWrapperRequest wrapperRequest) {
+        surveyResponseService.createSurveyResponse(wrapperRequest); // 200
     }
 }
