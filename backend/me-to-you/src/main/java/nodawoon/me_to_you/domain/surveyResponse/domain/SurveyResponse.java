@@ -30,10 +30,12 @@ public class SurveyResponse extends BaseEntity {
     private String response;
 
     private String respondentNickname;
-    private Long respondentId;
+
+    @Column(name = "respondent_id", length = 36)
+    private String respondentId;
 
     @Builder
-    public SurveyResponse(User user, Long surveyQuestionId, String response, String respondentNickname, Long respondentId) {
+    public SurveyResponse(User user, Long surveyQuestionId, String response, String respondentNickname, String respondentId) {
         this.user = user;
         this.surveyQuestionId = surveyQuestionId;
         this.response = response;
@@ -41,7 +43,7 @@ public class SurveyResponse extends BaseEntity {
         this.respondentId = respondentId;
     }
 
-    public static SurveyResponse createSurveyResponse(User user, Long surveyQuestionId, String response, String respondentNickname, Long respondentId) {
+    public static SurveyResponse createSurveyResponse(User user, Long surveyQuestionId, String response, String respondentNickname, String respondentId) {
         return builder()
                 .user(user)
                 .surveyQuestionId(surveyQuestionId)

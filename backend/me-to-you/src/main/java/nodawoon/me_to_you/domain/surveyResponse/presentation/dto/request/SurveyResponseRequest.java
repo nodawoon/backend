@@ -1,4 +1,4 @@
-package nodawoon.me_to_you.domain.surveyResponse.domain.presentation.dto.request;
+package nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request;
 
 import java.time.LocalDateTime;
 
@@ -10,5 +10,5 @@ public record SurveyResponseRequest(
         LocalDateTime createdDate,
         LocalDateTime lastModifyDate,
         String respondentNickname,
-        Long respondentId) {
+        String respondentId) {
 }
