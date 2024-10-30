@@ -22,12 +22,14 @@ public class SurveyResponseService {
     public void createSurveyResponse(SurveyResponseRequest surveyResponseRequest) {
         User currentUser = userUtils.getUserFromSecurityContext();
 
+        String responseString = String.join(",", surveyResponseRequest.response());
+
         SurveyResponse surveyResponse = SurveyResponse.createSurveyResponse(
                 currentUser,
-                surveyResponseRequest.surveyResponseId(),
-                surveyResponseRequest.response(),
+                surveyResponseRequest.surveyQuestionId(), // 설문 아이디
+                responseString, // response
                 surveyResponseRequest.respondentNickname(),
-                surveyResponseRequest.respondentId()
+                surveyResponseRequest.respondentId() // 응답자 아이디
         );
 
         surveyResponseRepository.save(surveyResponse);
