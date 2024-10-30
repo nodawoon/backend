@@ -22,7 +22,6 @@ public class SurveyResponseController {
     @PostMapping
     public void createSurveyResponse(
             @RequestBody @Valid SurveyResponseRequest surveyResponseRequest) {
-        surveyResponseService.createSurveyResponse(surveyResponseRequest);
-        // 200
+        surveyResponseService.createSurveyResponse(surveyResponseRequest); // 200
     }
 }
