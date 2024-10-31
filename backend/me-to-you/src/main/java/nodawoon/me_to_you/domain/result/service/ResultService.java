@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
 import nodawoon.me_to_you.domain.result.domain.repository.RespondentRepository;
 import nodawoon.me_to_you.domain.result.presentation.dto.response.RespondentResponse;
+import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByRIdResponse;
+import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
+import nodawoon.me_to_you.domain.surveyResponse.domain.repository.SurveyResponseRepository;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
@@ -16,19 +19,33 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ResultService {
-
+public class ResultService implements ResultServiceUtils {
     private final RespondentRepository respondentRepository;
+    private final SurveyResponseRepository surveyResponseRepository;
+
     private final UserUtils userUtils;
 
+    @Override
     public List<RespondentResponse> getRespondentList() {
         User currentUser = userUtils.getUserFromSecurityContext();
 
         List<Respondent> respondentList = respondentRepository.findByUser(currentUser);
 
-        // RespondentDto로 변환
+        // RespondentResponse로 변환
         return respondentList.stream()
                 .map(respondent -> new RespondentResponse(respondent.getId(), respondent.getRespondentNickname()))
+                .toList();
+    }
+
+    @Override
+    public List<ResultByRIdResponse> getResultByRIDList(Long respondentId) {
+        User currentUser = userUtils.getUserFromSecurityContext();
+        Respondent respondent = respondentRepository.findById(respondentId).orElse(null);
+
+        List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findByRespondentAndUserOrderBySurveyQuestionIdAsc(respondent, currentUser);
+
+        return SurveyResponseList.stream()
+                .map(surveyResponse -> new ResultByRIdResponse(surveyResponse.getSurveyQuestionId(), surveyResponse.getResponse()))
                 .toList();
     }
 }
