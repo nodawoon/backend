@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, Long> {
     List<SurveyResponse> findByRespondentAndUserOrderBySurveyQuestionIdAsc(Respondent respondent, User user);
+    List<SurveyResponse> findBySurveyQuestionIdAndUserOrderById(Long surveyQuestionId, User user);
 }

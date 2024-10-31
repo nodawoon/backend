@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import nodawoon.me_to_you.domain.result.presentation.dto.response.RespondentResponse;
+import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByQIdResponse;
 import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByRIdResponse;
 import nodawoon.me_to_you.domain.result.service.ResultService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,4 +35,10 @@ public class ResultController {
     @GetMapping("/{respondentId}")
     public List<ResultByRIdResponse> resultByRIdResponseList(@PathVariable long respondentId) {
         return resultService.getResultByRIDList(respondentId);}
+
+    @SecurityRequirements
+    @Operation(summary = "질문 번호별 답변 리스트 반환")
+    @GetMapping("/question-id/{surveyQuestionId}")
+    public List<ResultByQIdResponse> resultByQIdResponseList(@PathVariable long surveyQuestionId) {
+        return resultService.getResultByQIdList(surveyQuestionId);}
 }
