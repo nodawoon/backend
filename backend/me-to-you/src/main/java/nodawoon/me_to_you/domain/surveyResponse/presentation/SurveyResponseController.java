@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "설문 답변", description = "설문 답변 API")
 @RestController
-@RequestMapping("/api/surveys-responses")
+@RequestMapping("/api/survey-responses")
 @RequiredArgsConstructor
 public class SurveyResponseController {
 
