@@ -11,7 +11,6 @@ import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyR
 import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.domain.user.domain.repository.UserRepository;
-import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

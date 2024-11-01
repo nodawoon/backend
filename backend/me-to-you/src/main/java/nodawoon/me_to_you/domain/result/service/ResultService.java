@@ -14,7 +14,6 @@ import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -57,13 +56,10 @@ public class ResultService implements ResultServiceUtils {
 
         List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findBySurveyQuestionIdAndUserOrderById(surveyQuestionId, currentUser);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-
         return SurveyResponseList.stream()
                 .map(surveyResponse -> new ResultByQIdResponse(
                         getRespondentNickname(surveyResponse.getRespondent()),
-                        surveyResponse.getCreatedDate().format(formatter),
-                        surveyResponse.getResponse()))
+                        surveyResponse))
                 .toList();
     }
 
