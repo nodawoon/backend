@@ -27,6 +27,7 @@ public enum ErrorCode {
     USER_NOT_STORYBOOK_HOST(403, "해당하는 즐겨찾기의 소유자가 아닙니다."),
     USER_NOT_MY_BOOK_HOST(403, "해당하는 나의 책의 소유자가 아닙니다."),
     USER_NOT_REVIEW_HOST(403, "해당하는 리뷰의 소유자가 아닙니다."),
+    RESPONDENT_NOT_FOUND(403, "해당하는 응답자를 찾을 수 없습니다."),
 
     /* 404 NOT_FOUND : Resource를 찾을 수 없음 */
     USER_NOT_FOUND(404, "해당하는 정보의 사용자를 찾을 수 없습니다."),
