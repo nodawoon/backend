@@ -11,6 +11,7 @@ import nodawoon.me_to_you.global.database.BaseEntity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -29,6 +30,8 @@ public class User extends BaseEntity {
     private String email;
     private String profileImageUrl;
     private LocalDate birthday;
+    private String shareUrl;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SurveyResponse> surveyResponses = new ArrayList<>();
@@ -43,22 +46,24 @@ public class User extends BaseEntity {
     private OauthServerType oauthServerType;
 
     @Builder
-    public User(String nickname, String email, String profileImageUrl, LocalDate birthday, Mbti mbti, Gender gender, OauthServerType oauthServerType) {
+    public User(String nickname, String email, String profileImageUrl, LocalDate birthday, String shareUrl, Mbti mbti, Gender gender, OauthServerType oauthServerType) {
         this.nickname = nickname;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
         this.birthday = birthday;
+        this.shareUrl = shareUrl;
         this.mbti = mbti;
         this.gender = gender;
         this.oauthServerType = oauthServerType;
     }
 
-    public static User createUser(String nickname, String email, String profileImageUrl, LocalDate birthday, Mbti mbti, Gender gender, OauthServerType oauthServerType) {
+    public static User createUser(String nickname, String email, String profileImageUrl, LocalDate birthday, String shareUrl, Mbti mbti, Gender gender, OauthServerType oauthServerType) {
         return builder()
                 .nickname(nickname)
                 .email(email)
                 .profileImageUrl(profileImageUrl)
                 .birthday(birthday)
+                .shareUrl(shareUrl)
                 .mbti(mbti)
                 .gender(gender)
                 .oauthServerType(oauthServerType)

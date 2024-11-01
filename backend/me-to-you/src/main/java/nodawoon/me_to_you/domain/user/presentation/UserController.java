@@ -10,6 +10,7 @@ import nodawoon.me_to_you.domain.user.presentation.dto.request.CheckNicknameRequ
 import nodawoon.me_to_you.domain.user.presentation.dto.request.SignUpUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.UpdateUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.CheckNicknameResponse;
+import nodawoon.me_to_you.domain.user.presentation.dto.response.ShareUrlResponse;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
 import nodawoon.me_to_you.domain.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
@@ -61,4 +62,9 @@ public class UserController {
         return userService.checkNickname(nicknameCheckRequest);
     }
 
+    @Operation(summary = "사용자 설문 URL 조회")
+    @GetMapping("/share-url")
+    public ShareUrlResponse shareUrl() {
+        return userService.getShareUrl();
+    }
 }

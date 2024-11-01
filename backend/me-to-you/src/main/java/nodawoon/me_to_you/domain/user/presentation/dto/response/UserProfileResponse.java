@@ -13,12 +13,13 @@ public record UserProfileResponse(
     String nickname,
     Gender gender,
     LocalDate birthday,
+    String shareUrl,
     Mbti mbti,
     String profileImage,
     OauthServerType oauthServerType
 ) {
     public UserProfileResponse(User user) {
         this(user.getId(), user.getEmail(), user.getNickname(), user.getGender(), user.getBirthday(),
-                user.getMbti(), user.getProfileImageUrl(), user.getOauthServerType());
+                user.getShareUrl(), user.getMbti(), user.getProfileImageUrl(), user.getOauthServerType());
     }
 }
