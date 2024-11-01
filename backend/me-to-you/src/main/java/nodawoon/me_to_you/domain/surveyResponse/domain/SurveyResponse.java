@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
-import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.database.BaseEntity;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -22,10 +21,6 @@ public class SurveyResponse extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respondent_id")
     private Respondent respondent;
 
@@ -34,16 +29,14 @@ public class SurveyResponse extends BaseEntity {
     private String response;
 
     @Builder
-    public SurveyResponse(User user, Respondent respondent, Long surveyQuestionId, String response) {
-        this.user = user;
+    public SurveyResponse(Respondent respondent, Long surveyQuestionId, String response) {
         this.respondent = respondent;
         this.surveyQuestionId = surveyQuestionId;
         this.response = response;
     }
 
-    public static SurveyResponse createSurveyResponse(User user, Respondent respondent, Long surveyQuestionId, String response) {
+    public static SurveyResponse createSurveyResponse(Respondent respondent, Long surveyQuestionId, String response) {
         return builder()
-                .user(user)
                 .respondent(respondent)
                 .surveyQuestionId(surveyQuestionId)
                 .response(response)

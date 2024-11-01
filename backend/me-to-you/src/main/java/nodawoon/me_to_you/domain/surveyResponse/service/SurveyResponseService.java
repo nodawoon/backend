@@ -6,9 +6,11 @@ import nodawoon.me_to_you.domain.result.domain.Respondent;
 import nodawoon.me_to_you.domain.result.domain.repository.RespondentRepository;
 import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
 import nodawoon.me_to_you.domain.surveyResponse.domain.repository.SurveyResponseRepository;
+import nodawoon.me_to_you.domain.surveyResponse.exception.UserNotFoundException;
 import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseWrapperRequest;
 import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
 import nodawoon.me_to_you.domain.user.domain.User;
+import nodawoon.me_to_you.domain.user.domain.repository.UserRepository;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +22,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class SurveyResponseService {
+    private final UserRepository userRepository;
     private final SurveyResponseRepository surveyResponseRepository;
     private final RespondentRepository respondentRepository;
-    private final UserUtils userUtils;
 
     @Transactional
     public void createSurveyResponse(SurveyResponseWrapperRequest wrapperRequest) {
-        User currentUser = userUtils.getUserFromSecurityContext();
+        String uuid = wrapperRequest.shareUrl();
+        User currentUser = userRepository.findByShareUrl(uuid).orElseThrow(()->UserNotFoundException.EXCEPTION);
 
         // Respondent 생성
         String respondentNickname = wrapperRequest.respondentNickname();
@@ -43,7 +46,6 @@ public class SurveyResponseService {
             String responseString = String.join(",", surveyResponseRequest.response()); // 다수의 응답 변환
 
             SurveyResponse surveyResponse = SurveyResponse.createSurveyResponse(
-                    currentUser,
                     respondent,
                     surveyResponseRequest.surveyQuestionId(), // 설문 아이디
                     responseString // response
