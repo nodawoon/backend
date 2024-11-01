@@ -14,12 +14,15 @@ import nodawoon.me_to_you.domain.user.presentation.dto.request.CheckNicknameRequ
 import nodawoon.me_to_you.domain.user.presentation.dto.request.SignUpUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.UpdateUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.CheckNicknameResponse;
+import nodawoon.me_to_you.domain.user.presentation.dto.response.ShareUrlResponse;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
 import nodawoon.me_to_you.global.security.JwtTokenProvider;
 import nodawoon.me_to_you.global.utils.security.SecurityUtils;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -32,6 +35,7 @@ public class UserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserUtils userUtils;
     private final OauthServiceUtils oauthServiceUtils;
+    private static final String SHARE_URL = "http://localhost:3000/survey/responses/";
 
     // 회원 가입
     @Transactional
@@ -41,6 +45,7 @@ public class UserService {
                 signUpUserRequest.email(),
                 signUpUserRequest.profileImage(),
                 signUpUserRequest.birthday(),
+                UUID.randomUUID().toString(),
                 signUpUserRequest.mbti(),
                 signUpUserRequest.gender(),
                 signUpUserRequest.oauthServerType()
@@ -105,6 +110,14 @@ public class UserService {
 
         jwtTokenProvider.setHeaderAccessTokenEmpty(response);
         jwtTokenProvider.setHeaderRefreshTokenEmpty(response);
+    }
+
+    // 설문 공유 url
+    public ShareUrlResponse getShareUrl() {
+        User user = userUtils.getUserFromSecurityContext();
+        String shareUrl = SHARE_URL + user.getShareUrl();
+
+        return new ShareUrlResponse(shareUrl);
     }
 
     // 닉네임 중복 확인
