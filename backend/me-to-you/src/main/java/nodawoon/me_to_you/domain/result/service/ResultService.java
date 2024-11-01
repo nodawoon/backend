@@ -35,7 +35,7 @@ public class ResultService implements ResultServiceUtils {
 
         // RespondentResponse로 변환
         return respondentList.stream()
-                .map(respondent -> new RespondentResponse(respondent.getId(), respondent.getRespondentNickname()))
+                .map(RespondentResponse::new)
                 .toList();
     }
 
@@ -47,7 +47,7 @@ public class ResultService implements ResultServiceUtils {
         List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findByRespondentAndUserOrderBySurveyQuestionIdAsc(respondent, currentUser);
 
         return SurveyResponseList.stream()
-                .map(surveyResponse -> new ResultByRIdResponse(surveyResponse.getSurveyQuestionId(), surveyResponse.getResponse()))
+                .map(ResultByRIdResponse::new)
                 .toList();
     }
 
@@ -73,4 +73,5 @@ public class ResultService implements ResultServiceUtils {
                 .map(Respondent::getRespondentNickname)
                 .orElse("UnKnown");
     }
+
 }
