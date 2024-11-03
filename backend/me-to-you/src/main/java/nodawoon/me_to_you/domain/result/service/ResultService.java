@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
 import nodawoon.me_to_you.domain.result.domain.repository.RespondentRepository;
 import nodawoon.me_to_you.domain.result.presentation.dto.response.RespondentResponse;
+import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByPercentResponse;
 import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByQIdResponse;
 import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByRIdResponse;
 import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
@@ -38,30 +39,65 @@ public class ResultService implements ResultServiceUtils {
                 .toList();
     }
 
+//    @Override
+//    public List<ResultByRIdResponse> getResultByRIDList() {
+//        User currentUser = userUtils.getUserFromSecurityContext();
+//        List<SurveyResponse> surveyResponseList = surveyResponseRepository.findByUser(currentUser);
+//
+//        return surveyResponseList.stream()
+//                .map(ResultByRIdResponse::new)
+//                .toList();
+//
+//    }
+
     @Override
     public List<ResultByRIdResponse> getResultByRIDList(Long respondentId) {
-        User currentUser = userUtils.getUserFromSecurityContext();
         Respondent respondent = respondentRepository.findById(respondentId).orElse(null);
 
-        List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findByRespondentAndUserOrderBySurveyQuestionIdAsc(respondent, currentUser);
+        List<SurveyResponse> surveyResponseList = surveyResponseRepository.findByRespondentOrderBySurveyQuestionIdAsc(respondent);
 
-        return SurveyResponseList.stream()
+        return surveyResponseList.stream()
                 .map(ResultByRIdResponse::new)
                 .toList();
     }
 
-    @Override
+        @Override
     public List<ResultByQIdResponse> getResultByQIdList(Long surveyQuestionId) {
         User currentUser = userUtils.getUserFromSecurityContext();
 
-        List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findBySurveyQuestionIdAndUserOrderById(surveyQuestionId, currentUser);
+        List<SurveyResponse> surveyResponseList = surveyResponseRepository.findByUserAndSurveyQuestionIdOrderById(currentUser, surveyQuestionId);
 
-        return SurveyResponseList.stream()
+        return surveyResponseList.stream()
                 .map(surveyResponse -> new ResultByQIdResponse(
                         getRespondentNickname(surveyResponse.getRespondent()),
                         surveyResponse))
                 .toList();
     }
+
+    @Override
+    public List<ResultByPercentResponse> getResultByPercentList() {
+        User currentUser = userUtils.getUserFromSecurityContext();
+
+        List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions(currentUser);
+
+        return getPercentResponses.stream()
+                .map(ResultByPercentResponse::new)
+                .toList();
+    }
+
+
+//    @Override
+//    public List<ResultByQIdResponse> getResultByQIdList(Long surveyQuestionId) {
+//        User currentUser = userUtils.getUserFromSecurityContext();
+//
+//        List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findBySurveyQuestionIdAndUserOrderById(surveyQuestionId, currentUser);
+//
+//        return SurveyResponseList.stream()
+//                .map(surveyResponse -> new ResultByQIdResponse(
+//                        getRespondentNickname(surveyResponse.getRespondent()),
+//                        surveyResponse))
+//                .toList();
+//    }
 
     public String getRespondentNickname(Respondent respondent) {
         Long respondentId = respondent.getId();
