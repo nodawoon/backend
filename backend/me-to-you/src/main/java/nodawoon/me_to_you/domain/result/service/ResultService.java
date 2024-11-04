@@ -39,17 +39,6 @@ public class ResultService implements ResultServiceUtils {
                 .toList();
     }
 
-//    @Override
-//    public List<ResultByRIdResponse> getResultByRIDList() {
-//        User currentUser = userUtils.getUserFromSecurityContext();
-//        List<SurveyResponse> surveyResponseList = surveyResponseRepository.findByUser(currentUser);
-//
-//        return surveyResponseList.stream()
-//                .map(ResultByRIdResponse::new)
-//                .toList();
-//
-//    }
-
     @Override
     public List<ResultByRIdResponse> getResultByRIDList(Long respondentId) {
         Respondent respondent = respondentRepository.findById(respondentId).orElse(null);
@@ -77,27 +66,17 @@ public class ResultService implements ResultServiceUtils {
     @Override
     public List<ResultByPercentResponse> getResultByPercentList() {
         User currentUser = userUtils.getUserFromSecurityContext();
+        Long userId = currentUser.getId();
+        log.info(String.valueOf(userId));
 
-        List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions(currentUser);
+        List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions(userId);
+
+        log.info(getPercentResponses.toString());
 
         return getPercentResponses.stream()
                 .map(ResultByPercentResponse::new)
                 .toList();
     }
-
-
-//    @Override
-//    public List<ResultByQIdResponse> getResultByQIdList(Long surveyQuestionId) {
-//        User currentUser = userUtils.getUserFromSecurityContext();
-//
-//        List<SurveyResponse> SurveyResponseList = surveyResponseRepository.findBySurveyQuestionIdAndUserOrderById(surveyQuestionId, currentUser);
-//
-//        return SurveyResponseList.stream()
-//                .map(surveyResponse -> new ResultByQIdResponse(
-//                        getRespondentNickname(surveyResponse.getRespondent()),
-//                        surveyResponse))
-//                .toList();
-//    }
 
     public String getRespondentNickname(Respondent respondent) {
         Long respondentId = respondent.getId();

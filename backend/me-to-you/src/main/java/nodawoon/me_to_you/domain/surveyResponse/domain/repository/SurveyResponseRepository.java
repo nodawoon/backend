@@ -15,22 +15,31 @@ public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, 
 
     List<SurveyResponse> findByRespondentOrderBySurveyQuestionIdAsc(Respondent respondent);
 
-    @Query(value = "SELECT 'question1', sr1.response, " +
-            "(COUNT(sr1) * 100.0 / (SELECT COUNT(sr2) FROM survey_responses sr2 WHERE sr2.survey_question_id = 1 AND sr2.respondent.user = :user)) AS percentage " +
+    @Query(value = "SELECT sr1.survey_question_id, sr1.response, (COUNT(*) * 100.0 / " +
+            "(SELECT COUNT(*) " +
+            " FROM survey_responses sr2 " +
+            " JOIN respondents r ON sr2.respondent_id = r.respondent_id " +
+            " JOIN user u ON r.user_id = u.user_id " +
+            " WHERE sr2.survey_question_id = 1 AND u.user_id = :userId)) AS percentage " +
             "FROM survey_responses sr1 " +
-            "WHERE sr1.survey_question_id = 1 AND sr1.respondent.user = :user " +
+            "JOIN respondents r ON sr1.respondent_id = r.respondent_id " +
+            "JOIN user u ON r.user_id = u.user_id " +
+            "WHERE sr1.survey_question_id = 1 AND u.user_id = :userId " +
             "GROUP BY sr1.response " +
             "UNION ALL " +
-            "SELECT 'question5', sr5.response, " +
-            "(COUNT(sr5) * 100.0 / (SELECT COUNT(sr6) FROM survey_responses sr6 WHERE sr6.survey_question_id = 5 AND sr6.respondent.user = :user)) AS percentage " +
+            "SELECT sr5.survey_question_id, sr5.response, (COUNT(*) * 100.0 / " +
+            "(SELECT COUNT(*) " +
+            " FROM survey_responses sr6 " +
+            " JOIN respondents r ON sr6.respondent_id = r.respondent_id " +
+            " JOIN user u ON r.user_id = u.user_id " +
+            " WHERE sr6.survey_question_id = 5 AND u.user_id = :userId)) AS percentage " +
             "FROM survey_responses sr5 " +
-            "WHERE sr5.survey_question_id = 5 AND sr5.respondent.user = :user " +
+            "JOIN respondents r ON sr5.respondent_id = r.respondent_id " +
+            "JOIN user u ON r.user_id = u.user_id " +
+            "WHERE sr5.survey_question_id = 5 AND u.user_id = :userId " +
             "GROUP BY sr5.response",
             nativeQuery = true)
-    List<Object[]> percentResponsesForQuestions(@Param("user") User user);
+    List<Object[]> percentResponsesForQuestions(@Param("userId") Long userId);
 
-    // 수정 전
-//    @Query("SELECT sr FROM SurveyResponse sr JOIN sr.respondent r WHERE r.user = :user")
-//    List<SurveyResponse> findByUser(@Param("user") User user);
-//    List<SurveyResponse> findBySurveyQuestionIdAndUserOrderById(Long surveyQuestionId, User user);
+
 }

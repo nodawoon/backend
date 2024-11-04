@@ -1,8 +1,13 @@
 package nodawoon.me_to_you.domain.result.presentation.dto.response;
 
+import java.math.BigDecimal;
+
 public record ResultByPercentResponse(
-        String surveyQuestionId, String response, Double percent) {
+        Long surveyQuestionId, String response, Double percent) {
     public ResultByPercentResponse(Object[] result) {
-        this((String) result[0], (String) result[1], (Double) result[2]);
+        this(
+                (Long) result[0],
+                (String) result[1],
+                result[2] != null ? ((BigDecimal) result[2]).doubleValue() : 0.0);
     }
 }
