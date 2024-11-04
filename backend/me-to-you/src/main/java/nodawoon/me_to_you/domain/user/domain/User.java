@@ -5,13 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nodawoon.me_to_you.domain.oauth.domain.OauthServerType;
-import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
+import nodawoon.me_to_you.domain.result.domain.Respondent;
 import nodawoon.me_to_you.global.database.BaseEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -32,9 +31,8 @@ public class User extends BaseEntity {
     private LocalDate birthday;
     private String shareUrl;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SurveyResponse> surveyResponses = new ArrayList<>();
+    private List<Respondent> respondents = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Mbti mbti;

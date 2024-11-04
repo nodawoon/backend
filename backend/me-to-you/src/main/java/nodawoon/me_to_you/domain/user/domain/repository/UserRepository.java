@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByEmailAndOauthServerType(String email, OauthServerType oauthServerType);
 
+    Optional<User> findByShareUrl(String shareUrl);
+
 }
