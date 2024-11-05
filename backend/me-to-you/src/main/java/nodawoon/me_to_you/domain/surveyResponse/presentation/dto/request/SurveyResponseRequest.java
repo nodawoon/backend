@@ -1,7 +1,8 @@
 package nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request;
 
+import java.util.List;
+
 public record SurveyResponseRequest(
         Long surveyQuestionId,
-        String response
-        ) {
+        List<String> response) {
 }
