@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
 import nodawoon.me_to_you.domain.result.domain.repository.RespondentRepository;
-import nodawoon.me_to_you.domain.result.presentation.dto.response.RespondentResponse;
-import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByPercentResponse;
-import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByQIdResponse;
-import nodawoon.me_to_you.domain.result.presentation.dto.response.ResultByRIdResponse;
+import nodawoon.me_to_you.domain.result.presentation.dto.response.*;
 import nodawoon.me_to_you.domain.surveyResponse.domain.SurveyResponse;
+import nodawoon.me_to_you.domain.surveyResponse.domain.repository.SingleResponseRepository;
 import nodawoon.me_to_you.domain.surveyResponse.domain.repository.SurveyResponseRepository;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
@@ -26,6 +24,7 @@ public class ResultService implements ResultServiceUtils {
     private final SurveyResponseRepository surveyResponseRepository;
 
     private final UserUtils userUtils;
+    private final SingleResponseRepository singleResponseRepository;
 
     @Override
     public List<RespondentResponse> getRespondentList() {
@@ -67,14 +66,23 @@ public class ResultService implements ResultServiceUtils {
     public List<ResultByPercentResponse> getResultByPercentList() {
         User currentUser = userUtils.getUserFromSecurityContext();
         Long userId = currentUser.getId();
-        log.info(String.valueOf(userId));
 
         List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions(userId);
 
-        log.info(getPercentResponses.toString());
-
         return getPercentResponses.stream()
                 .map(ResultByPercentResponse::new)
+                .toList();
+    }
+
+    @Override
+    public List<ResultByCountResponse> getResultByCountList() {
+        User currentUser = userUtils.getUserFromSecurityContext();
+        Long userId = currentUser.getId();
+
+        List<Object[]> getCountResponses = singleResponseRepository.findTop3ResponseDetailsByUser(userId);
+
+        return getCountResponses.stream()
+                .map(ResultByCountResponse::new)
                 .toList();
     }
 
