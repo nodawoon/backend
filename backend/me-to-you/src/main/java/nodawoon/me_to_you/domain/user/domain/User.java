@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nodawoon.me_to_you.domain.oauth.domain.OauthServerType;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
+import nodawoon.me_to_you.domain.thirtyQuestion.domain.SelfSurvey;
 import nodawoon.me_to_you.global.database.BaseEntity;
 
 import java.time.LocalDate;
@@ -33,6 +34,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Respondent> respondents = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SelfSurvey> selfSurveys = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Mbti mbti;
