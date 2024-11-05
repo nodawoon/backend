@@ -24,13 +24,14 @@ public enum ErrorCode {
     /* 403 */
     REGISTER_EXPIRED_TOKEN(403,"만료된 리프레쉬 토큰입니다."),
     USER_INFO_NOT_FOUND(404, "회원가입을 진행해 주세요."),
-    USER_NOT_STORYBOOK_HOST(403, "해당하는 즐겨찾기의 소유자가 아닙니다."),
+    USER_NOT_SELF_SURVEY_HOST(403, "해당하는 30문 30답의 소유자가 아닙니다."),
     USER_NOT_MY_BOOK_HOST(403, "해당하는 나의 책의 소유자가 아닙니다."),
     USER_NOT_REVIEW_HOST(403, "해당하는 리뷰의 소유자가 아닙니다."),
     RESPONDENT_NOT_FOUND(403, "해당하는 응답자를 찾을 수 없습니다."),
 
     /* 404 NOT_FOUND : Resource를 찾을 수 없음 */
     USER_NOT_FOUND(404, "해당하는 정보의 사용자를 찾을 수 없습니다."),
+    SELF_SURVEY_NOT_FOUND(404, "해당하는 정보의 30문 30답을 찾을 수 없습니다."),
     NO_ERROR_TYPE(404, "오류 발생"),
     OAUTH_MEMBER_NOT_FOUND(404, "해당하는 로그인 정보를 찾을 수 없습니다."),
     FILE_EMPTY(404, "업로드 된 파일을 찾을 수 없습니다."),
