@@ -75,3 +75,6 @@ springdoc:
 
 slack:
   token: ${WEBHOOK_SLACK_URL}
+
+api:
+  openai-key: ${OPENAI_KEY}
