@@ -18,8 +18,6 @@ public class ChatGptService implements ChatGptServiceUtils {
     private final OpenaiApiClient openaiApiClient;
 
     public String generateChatgpt() {
-        long startTime = System.currentTimeMillis(); // 시작 시간 기록
-
         String message = "";
 
         String jsonResponse = openaiApiClient.sendMessage(message);
@@ -34,11 +32,6 @@ public class ChatGptService implements ChatGptServiceUtils {
         } catch (JSONException e) {
             throw ApiJsonParseException.EXCEPTION;
         }
-
-        long endTime = System.currentTimeMillis(); // 종료 시간 기록
-        long duration = endTime - startTime; // 경과 시간 계산
-
-        log.info("generateChatgpt 실행 시간: {} ms", duration); // 로그로 출력
 
         return content;
     }
