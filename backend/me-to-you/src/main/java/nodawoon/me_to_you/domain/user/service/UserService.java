@@ -35,7 +35,7 @@ public class UserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserUtils userUtils;
     private final OauthServiceUtils oauthServiceUtils;
-    private static final String SHARE_URL = "http://localhost:3000/survey/responses/";
+    private static final String SHARE_URL = "http://localhost:3000/survey/invitation/";
 
     // 회원 가입
     @Transactional
