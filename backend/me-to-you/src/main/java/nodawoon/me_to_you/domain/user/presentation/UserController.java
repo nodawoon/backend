@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @Operation(summary = "닉네임 중복 체크")
-    @GetMapping("/check-nickname")
+    @PostMapping("/check-nickname")
     public CheckNicknameResponse checkNickname(@RequestBody CheckNicknameRequest nicknameCheckRequest) {
         return userService.checkNickname(nicknameCheckRequest);
     }
