@@ -5,7 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
+import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
 import nodawoon.me_to_you.global.database.BaseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
@@ -24,6 +28,9 @@ public class SurveyResponse extends BaseEntity {
     @JoinColumn(name = "respondent_id")
     private Respondent respondent;
 
+    @OneToMany(mappedBy = "surveyResponse", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SingleResponse> singleResponses = new ArrayList<>();
+
     private Long surveyQuestionId;
 
     private String response;
@@ -35,11 +42,11 @@ public class SurveyResponse extends BaseEntity {
         this.response = response;
     }
 
-    public static SurveyResponse createSurveyResponse(Respondent respondent, Long surveyQuestionId, String response) {
+    public static SurveyResponse createSurveyResponse(Respondent respondent, SurveyResponseRequest surveyResponseRequest) {
         return builder()
                 .respondent(respondent)
-                .surveyQuestionId(surveyQuestionId)
-                .response(response)
+                .surveyQuestionId(surveyResponseRequest.surveyQuestionId())
+                .response(surveyResponseRequest.response())
                 .build();
     }
 }

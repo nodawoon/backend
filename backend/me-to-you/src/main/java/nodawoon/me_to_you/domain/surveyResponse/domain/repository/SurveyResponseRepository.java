@@ -40,6 +40,4 @@ public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, 
             "GROUP BY sr5.response",
             nativeQuery = true)
     List<Object[]> percentResponsesForQuestions(@Param("userId") Long userId);
-
-
 }
