@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import nodawoon.me_to_you.domain.result.domain.Respondent;
-import nodawoon.me_to_you.domain.surveyResponse.presentation.dto.request.SurveyResponseRequest;
 import nodawoon.me_to_you.global.database.BaseEntity;
 
 import java.util.ArrayList;
@@ -42,11 +41,11 @@ public class SurveyResponse extends BaseEntity {
         this.response = response;
     }
 
-    public static SurveyResponse createSurveyResponse(Respondent respondent, SurveyResponseRequest surveyResponseRequest) {
+    public static SurveyResponse createSurveyResponse(Respondent respondent, Long surveyQuestionId, String response) {
         return builder()
                 .respondent(respondent)
-                .surveyQuestionId(surveyResponseRequest.surveyQuestionId())
-                .response(surveyResponseRequest.response())
+                .surveyQuestionId(surveyQuestionId)
+                .response(response)
                 .build();
     }
 }

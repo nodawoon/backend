@@ -45,16 +45,19 @@ public class SurveyResponseService {
         List<SurveyResponseRequest> surveyResponseRequestList= wrapperRequest.surveyResponseRequestList();
 
         for (SurveyResponseRequest surveyResponseRequest : surveyResponseRequestList) {
+            String responseString = String.join(",", surveyResponseRequest.response()); // 다수의 응답 변환
+
             SurveyResponse surveyResponse = SurveyResponse.createSurveyResponse(
                     respondent,
-                    surveyResponseRequest // response
+                    surveyResponseRequest.surveyQuestionId(), // 설문 아이디
+                    responseString // response
             );
 
             // surveyResponse 생성
             surveyResponseRepository.save(surveyResponse);
 
-            if(surveyResponseRequest.surveyQuestionId() == 2){
-                String[] splitResponses = surveyResponseRequest.response().split(",");
+            if(surveyResponse.getSurveyQuestionId() == 2){
+                String[] splitResponses = surveyResponse.getResponse().split(",");
 
                 for (String splitResponse : splitResponses) {
                     SingleResponse singleResponse = SingleResponse.createSingleResponse(
