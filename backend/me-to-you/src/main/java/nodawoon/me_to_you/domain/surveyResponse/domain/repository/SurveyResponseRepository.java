@@ -25,7 +25,8 @@ public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, 
             "JOIN respondents r ON sr1.respondent_id = r.respondent_id " +
             "JOIN user u ON r.user_id = u.user_id " +
             "WHERE sr1.survey_question_id = 1 AND u.user_id = :userId " +
-            "GROUP BY sr1.response ",
+            "GROUP BY sr1.response "+
+            "ORDER BY percentage DESC",
             nativeQuery = true)
     List<Object[]> percentResponsesForQuestions1(@Param("userId") Long userId);
 
@@ -39,7 +40,8 @@ public interface SurveyResponseRepository extends JpaRepository<SurveyResponse, 
             "JOIN respondents r ON sr5.respondent_id = r.respondent_id " +
             "JOIN user u ON r.user_id = u.user_id " +
             "WHERE sr5.survey_question_id = 5 AND u.user_id = :userId " +
-            "GROUP BY sr5.response",
+            "GROUP BY sr5.response "+
+            "ORDER BY percentage DESC",
             nativeQuery = true)
     List<Object[]> percentResponsesForQuestions5(@Param("userId") Long userId);
 }
