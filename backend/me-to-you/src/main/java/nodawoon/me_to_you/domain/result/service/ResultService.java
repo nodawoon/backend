@@ -63,11 +63,23 @@ public class ResultService implements ResultServiceUtils {
     }
 
     @Override
-    public List<ResultByPercentResponse> getResultByPercentList() {
+    public List<ResultByPercentResponse> getResult1ByPercentList() {
         User currentUser = userUtils.getUserFromSecurityContext();
         Long userId = currentUser.getId();
 
-        List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions(userId);
+        List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions1(userId);
+
+        return getPercentResponses.stream()
+                .map(ResultByPercentResponse::new)
+                .toList();
+    }
+
+    @Override
+    public List<ResultByPercentResponse> getResult5ByPercentList() {
+        User currentUser = userUtils.getUserFromSecurityContext();
+        Long userId = currentUser.getId();
+
+        List<Object[]> getPercentResponses = surveyResponseRepository.percentResponsesForQuestions5(userId);
 
         return getPercentResponses.stream()
                 .map(ResultByPercentResponse::new)

@@ -41,10 +41,17 @@ public class ResultController {
         return resultService.getResultByQIdList(surveyQuestionId);}
 
     @SecurityRequirements
-    @Operation(summary = "1,5번 percent 반환")
-    @GetMapping("/percent")
-    public List<ResultByPercentResponse> resultByPercentResponseList() {
-        return resultService.getResultByPercentList();
+    @Operation(summary = "1번 percent 반환")
+    @GetMapping("/percent1")
+    public List<ResultByPercentResponse> result1ByPercentResponseList() {
+        return resultService.getResult1ByPercentList();
+    }
+
+    @SecurityRequirements
+    @Operation(summary = "5번 percent 반환")
+    @GetMapping("/percent5")
+    public List<ResultByPercentResponse> result5ByPercentResponseList() {
+        return resultService.getResult5ByPercentList();
     }
 
     @SecurityRequirements
