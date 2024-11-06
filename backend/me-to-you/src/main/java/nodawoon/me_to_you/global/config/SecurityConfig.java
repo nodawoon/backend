@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/check-nickname").permitAll()
                         .requestMatchers("/api/users/share-url").permitAll()
                         .requestMatchers("/api/users/return-nickname/**").permitAll()
-//                        .requestMatchers("/api/survey-responses").permitAll()
+                        .requestMatchers("/api/survey-responses").permitAll()
                         .requestMatchers("/api/file/image").permitAll()
                         .requestMatchers(SwaggerPatterns).permitAll()
                         .anyRequest().authenticated()
