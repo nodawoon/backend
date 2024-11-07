@@ -89,9 +89,14 @@ public class UserService {
     @Transactional
     public UserProfileResponse updateUser(UpdateUserRequest updateUserRequest) {
         User user = userUtils.getUserFromSecurityContext();
+        boolean existsByNickname = userRepository.existsByNickname(updateUserRequest.nickname());
 
-        if (userRepository.existsByNickname(updateUserRequest.nickname())) {
-            throw NicknameDuplicationException.EXCEPTION;
+        if (existsByNickname) {
+            if (user.getNickname().equals(updateUserRequest.nickname())) {
+                user.updateUser(updateUserRequest.nickname(), updateUserRequest.profileImage(), updateUserRequest.mbti());
+
+                return new UserProfileResponse(user);
+            } else throw NicknameDuplicationException.EXCEPTION;
         }
 
         user.updateUser(updateUserRequest.nickname(), updateUserRequest.profileImage(), updateUserRequest.mbti());
