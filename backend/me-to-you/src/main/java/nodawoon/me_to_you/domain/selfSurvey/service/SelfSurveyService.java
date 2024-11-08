@@ -1,20 +1,19 @@
-package nodawoon.me_to_you.domain.thirtyQuestion.service;
+package nodawoon.me_to_you.domain.selfSurvey.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nodawoon.me_to_you.domain.thirtyQuestion.domain.SelfSurvey;
-import nodawoon.me_to_you.domain.thirtyQuestion.domain.repository.SelfSurveyRepository;
-import nodawoon.me_to_you.domain.thirtyQuestion.exception.SelfSurveyNotFoundException;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.request.CreateSelfSurveyRequest;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.request.UpdateSelfSurveyRequest;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.response.SelfSurveyResponse;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.response.UserSelfSurveyStatusResponse;
+import nodawoon.me_to_you.domain.selfSurvey.domain.SelfSurvey;
+import nodawoon.me_to_you.domain.selfSurvey.domain.repository.SelfSurveyRepository;
+import nodawoon.me_to_you.domain.selfSurvey.exception.SelfSurveyNotFoundException;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.request.CreateSelfSurveyRequest;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.request.UpdateSelfSurveyRequest;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.response.SelfSurveyResponse;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.response.UserSelfSurveyStatusResponse;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class SelfSurveyService {
+public class SelfSurveyService implements SelfSurveyServiceUtils{
 
     private final SelfSurveyRepository selfSurveyRepository;
     private final UserUtils userUtils;
@@ -51,7 +50,7 @@ public class SelfSurveyService {
     // 질문 리스트 조회하기
     public List<SelfSurveyResponse> getSelfSurveys() {
         User user = userUtils.getUserFromSecurityContext();
-        List<SelfSurvey> allByUser = selfSurveyRepository.findAllByUser(user);
+        List<SelfSurvey> allByUser = getSelfSurveysByUser(user);
 
         return allByUser.stream()
                 .map(SelfSurveyResponse::new)
@@ -79,7 +78,13 @@ public class SelfSurveyService {
         return new UserSelfSurveyStatusResponse(exists);
     }
 
+    @Override
     public SelfSurvey querySelfSurveyById(Long id) {
         return selfSurveyRepository.findById(id).orElseThrow(() -> SelfSurveyNotFoundException.EXCEPTION);
+    }
+
+    @Override
+    public List<SelfSurvey> getSelfSurveysByUser(User user) {
+        return selfSurveyRepository.findAllByUser(user);
     }
 }

@@ -1,6 +1,6 @@
-package nodawoon.me_to_you.domain.thirtyQuestion.domain.repository;
+package nodawoon.me_to_you.domain.selfSurvey.domain.repository;
 
-import nodawoon.me_to_you.domain.thirtyQuestion.domain.SelfSurvey;
+import nodawoon.me_to_you.domain.selfSurvey.domain.SelfSurvey;
 import nodawoon.me_to_you.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

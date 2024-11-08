@@ -1,13 +1,13 @@
-package nodawoon.me_to_you.domain.thirtyQuestion.presentation;
+package nodawoon.me_to_you.domain.selfSurvey.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.request.CreateSelfSurveyRequest;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.request.UpdateSelfSurveyRequest;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.response.SelfSurveyResponse;
-import nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.response.UserSelfSurveyStatusResponse;
-import nodawoon.me_to_you.domain.thirtyQuestion.service.SelfSurveyService;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.request.CreateSelfSurveyRequest;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.request.UpdateSelfSurveyRequest;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.response.SelfSurveyResponse;
+import nodawoon.me_to_you.domain.selfSurvey.presentation.dto.response.UserSelfSurveyStatusResponse;
+import nodawoon.me_to_you.domain.selfSurvey.service.SelfSurveyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
