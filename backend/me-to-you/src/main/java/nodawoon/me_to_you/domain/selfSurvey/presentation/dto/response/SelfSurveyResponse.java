@@ -1,6 +1,6 @@
-package nodawoon.me_to_you.domain.thirtyQuestion.presentation.dto.response;
+package nodawoon.me_to_you.domain.selfSurvey.presentation.dto.response;
 
-import nodawoon.me_to_you.domain.thirtyQuestion.domain.SelfSurvey;
+import nodawoon.me_to_you.domain.selfSurvey.domain.SelfSurvey;
 
 import java.time.LocalDateTime;
 
