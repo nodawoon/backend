@@ -10,6 +10,7 @@ import nodawoon.me_to_you.domain.user.presentation.dto.request.CheckNicknameRequ
 import nodawoon.me_to_you.domain.user.presentation.dto.request.SignUpUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.UpdateUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.CheckNicknameResponse;
+import nodawoon.me_to_you.domain.user.presentation.dto.response.ReturnNicknameByUUIDResponse;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.ShareUrlResponse;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
 import nodawoon.me_to_you.domain.user.service.UserService;
@@ -66,5 +67,11 @@ public class UserController {
     @GetMapping("/share-url")
     public ShareUrlResponse shareUrl() {
         return userService.getShareUrl();
+    }
+
+    @Operation(summary = "UUID 값에 따른 주인장 닉네임 반환")
+    @GetMapping("/return-nickname/{shareurl}")
+    public ReturnNicknameByUUIDResponse returnNickname(@PathVariable String shareurl) {
+        return userService.returnNicknameByUUID(shareurl);
     }
 }

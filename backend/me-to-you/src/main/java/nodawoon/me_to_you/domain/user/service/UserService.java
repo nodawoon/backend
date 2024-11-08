@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nodawoon.me_to_you.domain.oauth.service.OauthServiceUtils;
+import nodawoon.me_to_you.domain.surveyResponse.exception.UserNotFoundException;
 import nodawoon.me_to_you.domain.user.domain.RefreshToken;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.domain.user.domain.repository.RefreshTokenRepository;
@@ -14,6 +15,7 @@ import nodawoon.me_to_you.domain.user.presentation.dto.request.CheckNicknameRequ
 import nodawoon.me_to_you.domain.user.presentation.dto.request.SignUpUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.UpdateUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.CheckNicknameResponse;
+import nodawoon.me_to_you.domain.user.presentation.dto.response.ReturnNicknameByUUIDResponse;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.ShareUrlResponse;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
 import nodawoon.me_to_you.global.security.JwtTokenProvider;
@@ -87,9 +89,14 @@ public class UserService {
     @Transactional
     public UserProfileResponse updateUser(UpdateUserRequest updateUserRequest) {
         User user = userUtils.getUserFromSecurityContext();
+        boolean existsByNickname = userRepository.existsByNickname(updateUserRequest.nickname());
 
-        if (userRepository.existsByNickname(updateUserRequest.nickname())) {
-            throw NicknameDuplicationException.EXCEPTION;
+        if (existsByNickname) {
+            if (user.getNickname().equals(updateUserRequest.nickname())) {
+                user.updateUser(updateUserRequest.nickname(), updateUserRequest.profileImage(), updateUserRequest.mbti());
+
+                return new UserProfileResponse(user);
+            } else throw NicknameDuplicationException.EXCEPTION;
         }
 
         user.updateUser(updateUserRequest.nickname(), updateUserRequest.profileImage(), updateUserRequest.mbti());
@@ -134,5 +141,12 @@ public class UserService {
         if (userRepository.existsByNickname(signUpUserRequest.nickname())) {
             throw NicknameDuplicationException.EXCEPTION;
         }
+    }
+
+    // uuid가 들어오면 nickname 반환
+    public ReturnNicknameByUUIDResponse returnNicknameByUUID(String shareUrl){
+        User currentUser = userRepository.findByShareUrl(shareUrl).orElseThrow(()-> UserNotFoundException.EXCEPTION);
+
+        return new ReturnNicknameByUUIDResponse(currentUser);
     }
 }
