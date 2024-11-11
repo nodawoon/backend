@@ -3,11 +3,13 @@ package nodawoon.me_to_you.domain.user.domain.repository;
 import nodawoon.me_to_you.domain.oauth.domain.OauthServerType;
 import nodawoon.me_to_you.domain.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-
 
     Optional<User> findByOauthServerTypeAndEmail(OauthServerType oauthServerType, String email);
 
@@ -17,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByShareUrl(String shareUrl);
 
+    @Query(value = "SELECT u.nickname FROM user u WHERE MATCH(u.nickname) AGAINST(:keyword)", nativeQuery = true)
+    List<String> searchByNickname(@Param("keyword") String keyword);
 }
