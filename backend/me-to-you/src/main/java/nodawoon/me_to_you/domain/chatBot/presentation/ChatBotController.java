@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import nodawoon.me_to_you.domain.chatBot.presentation.dto.request.ChangeChatBotAnswerRequest;
 import nodawoon.me_to_you.domain.chatBot.presentation.dto.request.CreateChatBotRequest;
 import nodawoon.me_to_you.domain.chatBot.presentation.dto.response.ChatBotResponse;
+import nodawoon.me_to_you.domain.chatBot.presentation.dto.response.TargetUserWithLastChatBotResponse;
 import nodawoon.me_to_you.domain.chatBot.service.ChatBotService;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
 import org.springframework.data.domain.Slice;
@@ -28,7 +29,7 @@ public class ChatBotController {
 
     @Operation(summary = "내가 참여한 채팅방 목록 조회하기")
     @GetMapping("/chat-room")
-    public Slice<UserProfileResponse> getMyChatRoomList(@RequestParam int page) {
+    public Slice<Object[]> getMyChatRoomList(@RequestParam int page) {
         return chatBotService.getMyChatRoomList(page);
     }
 
@@ -78,5 +79,11 @@ public class ChatBotController {
     @DeleteMapping("/{chatBotId}/my-question")
     public void deleteMyQuestion(@PathVariable Long chatBotId) {
         chatBotService.deleteMyQuestion(chatBotId);
+    }
+
+    @Operation(summary = "읽음 상태로 변경")
+    @PatchMapping("/{chatBotId}/status")
+    public void readChatBot(@PathVariable Long chatBotId) {
+        chatBotService.readChatBot(chatBotId);
     }
 }

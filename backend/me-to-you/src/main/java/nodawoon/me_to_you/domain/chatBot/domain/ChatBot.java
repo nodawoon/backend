@@ -39,18 +39,20 @@ public class ChatBot extends BaseEntity {
     private String answer;
     private boolean isQuestionIncluded;
     private int limitCount;
+    private boolean isNew;
 
     @Enumerated(EnumType.STRING)
     private AnswerStatus answerStatus;
 
     @Builder
-    public ChatBot(User questionUser, User targetUser, String question, String answer, boolean isQuestionIncluded, int limitCount, AnswerStatus answerStatus) {
+    public ChatBot(User questionUser, User targetUser, String question, String answer, boolean isQuestionIncluded, int limitCount, boolean isNew, AnswerStatus answerStatus) {
         this.questionUser = questionUser;
         this.targetUser = targetUser;
         this.question = question;
         this.answer = answer;
         this.isQuestionIncluded = isQuestionIncluded;
         this.limitCount = limitCount;
+        this.isNew = isNew;
         this.answerStatus = answerStatus;
     }
 
@@ -62,6 +64,7 @@ public class ChatBot extends BaseEntity {
                 .answer(answer)
                 .isQuestionIncluded(false)
                 .limitCount(3)
+                .isNew(false)
                 .answerStatus(answerStatus)
                 .build();
     }
@@ -81,6 +84,11 @@ public class ChatBot extends BaseEntity {
     public void userAnswer(String answer) {
         this.answer = answer;
         this.answerStatus = AnswerStatus.ANSWERED_BY_USER;
+        this.isNew = true;
+    }
+
+    public void readChatBot() {
+        this.isNew = false;
     }
 
     public void addChatBotPrompt() {

@@ -9,6 +9,7 @@ import nodawoon.me_to_you.domain.chatBot.exception.ChatBotNotFoundException;
 import nodawoon.me_to_you.domain.chatBot.presentation.dto.request.ChangeChatBotAnswerRequest;
 import nodawoon.me_to_you.domain.chatBot.presentation.dto.request.CreateChatBotRequest;
 import nodawoon.me_to_you.domain.chatBot.presentation.dto.response.ChatBotResponse;
+import nodawoon.me_to_you.domain.chatBot.presentation.dto.response.TargetUserWithLastChatBotResponse;
 import nodawoon.me_to_you.domain.selfSurvey.service.SelfSurveyServiceUtils;
 import nodawoon.me_to_you.domain.user.domain.User;
 import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
@@ -59,13 +60,13 @@ public class ChatBotService {
     }
 
     // 내가 참여한 채팅방 목록 조회하기
-    public Slice<UserProfileResponse> getMyChatRoomList(int page) {
+    public Slice<Object[]> getMyChatRoomList(int page) {
         User user = userUtils.getUserFromSecurityContext();
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id"));
+        Pageable pageable = PageRequest.of(page, 10);
 
-        Slice<User> userList = chatBotRepository.findDistinctTargetUsersByQuestionUser(user, pageable);
+        Slice<Object[]> chatBotList = chatBotRepository.findDistinctTargetUsersWithLastChatBot(user, pageable);
 
-        return userList.map(UserProfileResponse::new);
+        return chatBotList;
     }
 
     // 해당 질문 gpt에 다시 물어보기
@@ -182,6 +183,16 @@ public class ChatBotService {
         chatBot.removeChatBotPrompt();
 
         return new ChatBotResponse(chatBot, new UserProfileResponse(chatBot.getQuestionUser()));
+    }
+
+    // 읽음 상태로 변경
+    @Transactional
+    public void readChatBot(Long chatBotId) {
+        User user = userUtils.getUserFromSecurityContext();
+        ChatBot chatBot = queryChatBot(chatBotId);
+
+        chatBot.validQuestionUserHost(user);
+        chatBot.readChatBot();
     }
 
     // 30문 30답 조회 후 프롬프트 생성
