@@ -25,7 +25,8 @@ public enum ErrorCode {
     REGISTER_EXPIRED_TOKEN(403,"만료된 리프레쉬 토큰입니다."),
     USER_INFO_NOT_FOUND(404, "회원가입을 진행해 주세요."),
     USER_NOT_SELF_SURVEY_HOST(403, "해당하는 30문 30답의 소유자가 아닙니다."),
-    USER_NOT_CHATBOT_HOST(403, "해당하는 챗봇 질문의 소유자가 아닙니다."),
+    TARGET_USER_NOT_CHATBOT_HOST(403, "해당하는 챗봇 질문 받는 사용자가 아닙니다."),
+    QUESTION_USER_NOT_CHATBOT_HOST(403, "해당하는 챗봇한 사용자가 아닙니다."),
     RESPONDENT_NOT_FOUND(403, "해당하는 응답자를 찾을 수 없습니다."),
 
     /* 404 NOT_FOUND : Resource를 찾을 수 없음 */
@@ -41,6 +42,7 @@ public enum ErrorCode {
     NICKNAME_DUPLICATION(409, "이미 사용중인 닉네임입니다."),
 
     /* 429 요청 횟수 초과 */
+    LIMIT_COUNT_EXCEEDED(429, "다시 질문하기 횟수를 모두 소진하였습니다."),
 
     /* 500 SERVER_ERROR */
     INTERNAL_SERVER_ERROR(500,"서버 에러"),

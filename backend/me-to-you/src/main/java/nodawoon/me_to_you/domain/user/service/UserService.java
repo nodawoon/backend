@@ -127,6 +127,12 @@ public class UserService {
 
     // 닉네임 중복 확인
     public CheckNicknameResponse checkNickname(CheckNicknameRequest checkNicknameRequest) {
+        User user = userUtils.getUserFromSecurityContext();
+        String nickname = user.getNickname();
+
+        if (checkNicknameRequest.nickname().equals(nickname)) {
+            return new CheckNicknameResponse(false);
+        }
         return new CheckNicknameResponse(userRepository.existsByNickname(checkNicknameRequest.nickname()));
     }
 

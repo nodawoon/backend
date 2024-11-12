@@ -1,4 +1,4 @@
-package nodawoon.me_to_you.domain.thirtyQuestion.exception;
+package nodawoon.me_to_you.domain.selfSurvey.exception;
 
 import nodawoon.me_to_you.global.error.exception.ErrorCode;
 import nodawoon.me_to_you.global.error.exception.MainException;
