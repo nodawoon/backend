@@ -21,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT u.nickname FROM user u WHERE MATCH(u.nickname) AGAINST(:keyword)", nativeQuery = true)
     List<String> searchByNickname(@Param("keyword") String keyword);
+
+    Optional<User> findByNickname(String nickname);
 }

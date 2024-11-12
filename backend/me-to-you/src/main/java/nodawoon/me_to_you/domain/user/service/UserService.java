@@ -148,12 +148,19 @@ public class UserService {
         return new ReturnNicknameByUUIDResponse(currentUser);
     }
 
-    // 챗봇 페이지에서 닉네임 검색 시 해당하는 닉네임 반환
+    // 챗봇 페이지에서 닉네임 검색 시 해당하는 닉네임 리스트 반환
     public List<SearchNicknameResponse> returnNicknameByKeyword(String keyword){
        List<String> searchNickname = userRepository.searchByNickname(keyword);
 
         return searchNickname.stream()  // List<String>을 Stream으로 변환
                 .map(SearchNicknameResponse::new)
                 .toList();
+    }
+
+    // 검색 된 닉네임에 따른 UUID 반환
+    public ReturnUuidByNicknameResponse returnUUIDByNickname(String nickname){
+        User searchedUser = userRepository.findByNickname(nickname).orElseThrow(()->UserNotFoundException.EXCEPTION);
+
+        return new ReturnUuidByNicknameResponse(searchedUser);
     }
 }

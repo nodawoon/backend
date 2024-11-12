@@ -81,4 +81,10 @@ public class UserController {
     }
 
     // 검색결과 후 해당 페이지로 이동하는 api
+    @Operation(summary = "닉네임에 따른 UUID 반환")
+    @GetMapping("/return-uuid/{nickname}")
+    public ReturnUuidByNicknameResponse returnUuid(@PathVariable String nickname) {
+        return userService.returnUUIDByNickname(nickname);
+    }
+
 }
