@@ -26,7 +26,10 @@ public class SelfSurvey extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(length = 200)
     private String question;
+
+    @Column(length = 600)
     private String answer;
 
     @Builder
