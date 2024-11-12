@@ -14,16 +14,14 @@ import nodawoon.me_to_you.domain.user.exception.UserDuplicationException;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.CheckNicknameRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.SignUpUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.UpdateUserRequest;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.CheckNicknameResponse;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.ReturnNicknameByUUIDResponse;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.ShareUrlResponse;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
+import nodawoon.me_to_you.domain.user.presentation.dto.response.*;
 import nodawoon.me_to_you.global.security.JwtTokenProvider;
 import nodawoon.me_to_you.global.utils.security.SecurityUtils;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -154,5 +152,21 @@ public class UserService {
         User currentUser = userRepository.findByShareUrl(shareUrl).orElseThrow(()-> UserNotFoundException.EXCEPTION);
 
         return new ReturnNicknameByUUIDResponse(currentUser);
+    }
+
+    // 챗봇 페이지에서 닉네임 검색 시 해당하는 닉네임 리스트 반환
+    public List<SearchNicknameResponse> returnNicknameByKeyword(String keyword){
+       List<String> searchNickname = userRepository.searchByNickname(keyword);
+
+        return searchNickname.stream()  // List<String>을 Stream으로 변환
+                .map(SearchNicknameResponse::new)
+                .toList();
+    }
+
+    // 검색 된 닉네임에 따른 UUID 반환
+    public ReturnUuidByNicknameResponse returnUUIDByNickname(String nickname){
+        User searchedUser = userRepository.findByNickname(nickname).orElseThrow(()->UserNotFoundException.EXCEPTION);
+
+        return new ReturnUuidByNicknameResponse(searchedUser);
     }
 }

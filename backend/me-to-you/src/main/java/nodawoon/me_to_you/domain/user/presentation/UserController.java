@@ -9,12 +9,11 @@ import lombok.RequiredArgsConstructor;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.CheckNicknameRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.SignUpUserRequest;
 import nodawoon.me_to_you.domain.user.presentation.dto.request.UpdateUserRequest;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.CheckNicknameResponse;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.ReturnNicknameByUUIDResponse;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.ShareUrlResponse;
-import nodawoon.me_to_you.domain.user.presentation.dto.response.UserProfileResponse;
+import nodawoon.me_to_you.domain.user.presentation.dto.response.*;
 import nodawoon.me_to_you.domain.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "유저", description = "유저 관련 API")
 @RestController
@@ -74,4 +73,18 @@ public class UserController {
     public ReturnNicknameByUUIDResponse returnNickname(@PathVariable String shareurl) {
         return userService.returnNicknameByUUID(shareurl);
     }
+
+    @Operation(summary = "챗봇 페이지에서 닉네임 검색")
+    @GetMapping("/search-nickname/{keyword}")
+    public List<SearchNicknameResponse> searchNickname(@PathVariable String keyword) {
+        return userService.returnNicknameByKeyword(keyword);
+    }
+
+    // 검색결과 후 해당 페이지로 이동하는 api
+    @Operation(summary = "닉네임에 따른 UUID 반환")
+    @GetMapping("/return-uuid/{nickname}")
+    public ReturnUuidByNicknameResponse returnUuid(@PathVariable String nickname) {
+        return userService.returnUUIDByNickname(nickname);
+    }
+
 }
