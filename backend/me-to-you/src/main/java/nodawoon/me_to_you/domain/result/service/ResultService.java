@@ -104,5 +104,4 @@ public class ResultService implements ResultServiceUtils {
                 .map(Respondent::getRespondentNickname)
                 .orElse("UnKnown");
     }
-
 }
