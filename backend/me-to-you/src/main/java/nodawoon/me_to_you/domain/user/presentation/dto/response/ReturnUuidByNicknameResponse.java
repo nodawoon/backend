@@ -3,9 +3,9 @@ package nodawoon.me_to_you.domain.user.presentation.dto.response;
 import nodawoon.me_to_you.domain.user.domain.User;
 
 public record ReturnUuidByNicknameResponse(
-        String shareUrl
+        Long userId, String nickname, String profileImageUrl
 ) {
     public ReturnUuidByNicknameResponse(User user) {
-        this(user.getShareUrl());
+        this(user.getId(), user.getNickname(), user.getProfileImageUrl());
     }
 }

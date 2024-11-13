@@ -19,8 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByShareUrl(String shareUrl);
 
-    @Query(value = "SELECT u.nickname FROM user u WHERE MATCH(u.nickname) AGAINST(:keyword)", nativeQuery = true)
-    List<String> searchByNickname(@Param("keyword") String keyword);
+    @Query(value = "SELECT u.nickname, u.profile_image_url FROM user u WHERE MATCH(u.nickname) AGAINST(:keyword)", nativeQuery = true)
+    List<Object[]> searchByNickname(@Param("keyword") String keyword);
 
     Optional<User> findByNickname(String nickname);
 }
