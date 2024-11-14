@@ -73,8 +73,8 @@ public class SelfSurveyService implements SelfSurveyServiceUtils{
     }
     
     // 30문 30답 유무 조회
-    public UserSelfSurveyStatusResponse checkUserSelfSurveyStatus() {
-        User user = userUtils.getUserFromSecurityContext();
+    public UserSelfSurveyStatusResponse checkUserSelfSurveyStatus(Long userId) {
+        User user = userUtils.getUserById(userId);
         boolean exists = selfSurveyRepository.existsByUser(user);
 
         return new UserSelfSurveyStatusResponse(exists);

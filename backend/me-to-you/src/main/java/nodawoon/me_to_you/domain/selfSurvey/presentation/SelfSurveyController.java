@@ -39,8 +39,8 @@ public class SelfSurveyController {
     }
 
     @Operation(summary = "30문 30답 유무 조회")
-    @GetMapping("/exists")
-    public UserSelfSurveyStatusResponse existsSelfSurveyStatus() {
-        return selfSurveyService.checkUserSelfSurveyStatus();
+    @GetMapping("/exists/{userId}")
+    public UserSelfSurveyStatusResponse existsSelfSurveyStatus(@PathVariable Long userId) {
+        return selfSurveyService.checkUserSelfSurveyStatus(userId);
     }
 }
