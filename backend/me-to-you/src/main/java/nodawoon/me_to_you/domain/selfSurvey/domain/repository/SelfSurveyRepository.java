@@ -10,4 +10,6 @@ public interface SelfSurveyRepository extends JpaRepository<SelfSurvey, Long> {
     List<SelfSurvey> findAllByUser(User user);
 
     boolean existsByUser(User user);
+
+    void deleteAllByUser(User user);
 }

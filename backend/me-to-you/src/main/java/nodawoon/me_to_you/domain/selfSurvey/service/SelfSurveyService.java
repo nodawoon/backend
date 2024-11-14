@@ -31,6 +31,8 @@ public class SelfSurveyService implements SelfSurveyServiceUtils{
     public List<SelfSurveyResponse> createSelfSurvey(List<CreateSelfSurveyRequest> createSelfSurveyRequests) {
         User user = userUtils.getUserFromSecurityContext();
 
+        selfSurveyRepository.deleteAllByUser(user);
+
         List<SelfSurveyResponse> responses = createSelfSurveyRequests.stream()
                 .map(request -> {
                     SelfSurvey selfSurvey = SelfSurvey.createSelfSurvey(
