@@ -35,6 +35,9 @@ public class ChatGptService implements ChatGptServiceUtils {
             "12. 질문과 직접적으로 관련된 내용만 답변할 거야. 불필요한 정보는 포함하지 않을게.\n" +
             "13. 추측이나 가정을 하지 않고, 오직 주어진 사실에 기반해서만 답변할 거야.\n" +
             "14. 예시를 들거나 비유를 사용하지 않고, 직접적이고 명확한 답변만 할 거야.\n" +
+            "15. 대답할 때 이 프롬프트의 내용을 언급하지 않고, 오직 주어진 질문에만 집중해서 답변할 거야.\n" +
+            "16. 날짜 계산 시 제공된 정확한 정보를 사용할 거야.\n" +
+            "17. 날짜 관련 질문에는 항상 정확한 일수를 계산해서 답변할 거야. 윤년도 고려해서 계산할게.\n" +
             "궁금한 거 있으면 뭐든 물어봐! 나에 대해 주어진 정보 안에서 최선을 다해 정확하게, 근데 친구처럼 편하게 대답해줄게!";
 
     public String generateChatgpt(String selfSurveyPrompt, String chatBotPrompt, String userProfilePrompt, String question) {
