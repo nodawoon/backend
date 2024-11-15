@@ -39,6 +39,12 @@ public class ChatBotController {
         return chatBotService.requestChatBot(chatBotId);
     }
 
+    @Operation(summary = "기다리기")
+    @PatchMapping("/{chatBotId}/wait")
+    public ChatBotResponse waitChatBot(@PathVariable Long chatBotId) {
+        return chatBotService.waitChatBot(chatBotId);
+    }
+
     @Operation(summary = "내가 질문 받는 사람에게 한 모든 질문 조회하기")
     @GetMapping("/{targetUserId}")
     public Slice<ChatBotResponse> getAllChatBots(@PathVariable Long targetUserId, @RequestParam int page) {

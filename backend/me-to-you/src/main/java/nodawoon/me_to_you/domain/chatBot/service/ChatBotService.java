@@ -49,7 +49,7 @@ public class ChatBotService {
         if (!answer.contains("잘 모르겠어")) {
             answerStatus = ANSWERED_BY_BOT;
         } else {
-            answerStatus = UNANSWERED_BY_BOT;
+            answerStatus = NONE;
         }
 
         ChatBot chatBot = ChatBot.createChatBot(questioner, targetUser, createChatBotRequest.question(), answer, answerStatus);
@@ -91,6 +91,18 @@ public class ChatBotService {
             chatBot.updateAnswerStatus(ANSWERED_BY_BOT);
             chatBot.updateAnswer(answer);
         }
+
+        return new ChatBotResponse(chatBot, new UserProfileResponse(questioner));
+    }
+
+    // 기다리기
+    @Transactional
+    public ChatBotResponse waitChatBot(Long chatBotId) {
+        User questioner = userUtils.getUserFromSecurityContext();
+        ChatBot chatBot = queryChatBot(chatBotId);
+
+        chatBot.validQuestionUserHost(questioner);
+        chatBot.updateAnswerStatus(UNANSWERED_BY_BOT);
 
         return new ChatBotResponse(chatBot, new UserProfileResponse(questioner));
     }
