@@ -18,6 +18,8 @@ import nodawoon.me_to_you.domain.user.presentation.dto.response.*;
 import nodawoon.me_to_you.global.security.JwtTokenProvider;
 import nodawoon.me_to_you.global.utils.security.SecurityUtils;
 import nodawoon.me_to_you.global.utils.user.UserUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,6 +129,12 @@ public class UserService {
 
     // 닉네임 중복 확인
     public CheckNicknameResponse checkNickname(CheckNicknameRequest checkNicknameRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if ("anonymousUser".equals(authentication.getPrincipal())) {
+            return new CheckNicknameResponse(userRepository.existsByNickname(checkNicknameRequest.nickname()));
+        }
+
         User user = userUtils.getUserFromSecurityContext();
         String nickname = user.getNickname();
 
